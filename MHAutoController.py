@@ -3,6 +3,10 @@
 import wx
 from mhView import *
 from mhModel import * 
+import win32api
+import win32gui
+import win32con
+
 
 class MHAutoController(object):
 
@@ -17,6 +21,32 @@ class MHAutoController(object):
 		self.mhV = mhView(self.frame)
 		#初始化模型
 		self.mhModel = mhModel()
+
+		#移动游戏窗口
+		def moveHandle():
+						
+			wdname = '《梦幻西游》手游'
+			handle = win32gui.FindWindow(0,wdname)			
+			if handle == 0:
+				print("没有找到窗口")
+			else:
+				print('调整窗口')
+				print(win32gui.GetWindowRect(handle))	
+				#调整窗口到左上角
+				win32gui.MoveWindow(handle,0,0,800,600,False)
+				#重新获取窗口大小
+				handle = win32gui.FindWindow(0,wdname)		
+				handleList = win32gui.GetWindowRect(handle)
+				print(handleList)
+				#鼠标移动到右下角
+				win32api.SetCursorPos((handleList[2]-1,handleList[3]-1))
+				# 点击鼠标左键
+				win32api.mouse_event(win32con.MOUSEEVENTF_LEFTDOWN,0,0,0,0)
+			    #调整大小
+				win32api.SetCursorPos((800,600)) 
+				##放开鼠标
+				win32api.mouse_event(win32con.MOUSEEVENTF_LEFTUP,0,0,0,0)			
+
 
 		#点击保存按钮,输出保存设置
 		def saveClick(event):
@@ -39,7 +69,7 @@ class MHAutoController(object):
 			print(self.mhModel.printStr)
 			self.mhModel.isSave = True	
 			self.mhV.printTextLab.SetLabel(self.mhModel.printStr)
-
+			moveHandle()
 
 
 		#弹框提示保存
@@ -47,9 +77,7 @@ class MHAutoController(object):
 			wx.MessageBox("请选择任务", "Message" ,wx.OK | wx.ICON_INFORMATION)
 			
 			
-		#移动游戏窗口
-		def moveHandle():
-			print('调整窗口')
+
 			
 		def runMission():
 			print('开始执行')
@@ -61,8 +89,7 @@ class MHAutoController(object):
 			
 			if self.mhModel.isSave == True:
 				#开始执行
-				moveHandle()
-				
+
 				runMission()
 				
 	
