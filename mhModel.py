@@ -1,15 +1,15 @@
-########################################################################
+# -- coding: UTF-8 --
 class mhModel(object):
     """"""
 
     #----------------------------------------------------------------------
     def __init__(self):
         """Constructor"""
-        #输出显示字符串
+        #输出字符
         self.printStr = ''
-        #标识是否保存设置
+        #是否保存
         self.isSave = False
-        #标识是否选择某项任务
+        #记录选择任务
         self.isTeach = False
         self.isDemon = False
         self.isMap = False

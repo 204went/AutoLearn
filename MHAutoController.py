@@ -3,6 +3,7 @@
 import wx
 from mhView import *
 from mhModel import * 
+from mhMissionState import * 
 import win32api
 import win32gui
 import win32con
@@ -19,8 +20,8 @@ class MHAutoController(object):
 
 		# 初始化控件view
 		self.mhV = mhView(self.frame)
-		#初始化模型
-		self.mhModel = mhModel()
+		# 初始化模型
+		self.mhModel = mhModel()		
 
 		#移动游戏窗口
 		def moveHandle():
@@ -44,7 +45,7 @@ class MHAutoController(object):
 				win32api.mouse_event(win32con.MOUSEEVENTF_LEFTDOWN,0,0,0,0)
 			    #调整大小
 				win32api.SetCursorPos((800,600)) 
-				##放开鼠标
+				#放开鼠标
 				win32api.mouse_event(win32con.MOUSEEVENTF_LEFTUP,0,0,0,0)			
 
 
@@ -77,10 +78,18 @@ class MHAutoController(object):
 			wx.MessageBox("请选择任务", "Message" ,wx.OK | wx.ICON_INFORMATION)
 			
 			
-
-			
 		def runMission():
-			print('开始执行')
+			
+			mhState = mhMissionState()
+			
+			if mhState.stateStr == mhState.STATE_TEACH:
+				print('开始师门')	
+			if mhState.stateStr == mhState.STATE_DEON:
+				print('开始秘境')
+			if mhState.stateStr == mhState.STATE_MAP:
+				print('开始宝图')	
+			if mhState.stateStr == mhState.STATE_MOVE:
+				print('开始押镖')				
 			
 			
 			
